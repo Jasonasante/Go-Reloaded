@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 )
 
-func low() {
+func low(s string, num int) {
 }
 
 func up() {
@@ -29,5 +29,11 @@ func main() {
 	}
 	sampleString := string(content)
 	// this converts the content of the file into a string
-	fmt.Println(sampleString)
+	toFindCap:= "(cap)"
+	sampleSlice:=[]rune(sampleString)
+	subCap:=[]rune(toFindCap)
+	counter:=0
+	for i:=0; i<len(sampleString)-len(toFind); i++{
+		for j:=0 ; j<len(toFindCap); 
+	}
 }
