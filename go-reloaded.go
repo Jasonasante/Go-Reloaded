@@ -1,4 +1,4 @@
-package piscine
+package main
 
 import (
 	"fmt"
@@ -20,15 +20,14 @@ func atoAn() {
 func hex() {
 }
 
-func readFile() string {
+func main() {
 	fileName := "sample.txt"
 	content, err := ioutil.ReadFile(fileName)
+	// this reads the content of the file
 	if err != nil {
 		fmt.Printf("the mistake is : %v\n", err.Error())
 	}
-	var bytes byte
-	for i := range content {
-		bytes += content[i]
-	}
-	return string(bytes)
+	sampleString := string(content)
+	// this converts the content of the file into a string
+	fmt.Println(sampleString)
 }
