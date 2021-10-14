@@ -16,7 +16,7 @@ func ToLower(s string) string {
 	return string(lowstr)
 }
 
-func ToUpper(s string) {
+func ToUpper(s string) string {
 	upstr := []rune(s)
 	for i, char := range upstr {
 		if char >= 97 && char <= 122 {
@@ -79,19 +79,63 @@ func main() {
 	// this turns the contents of the file into a string.
 	splitString := strings.Split(sampleString, " ")
 	// this splits the string into its own elements by the space.
-	for i := range splitString {
-		if splitString[i] == "(cap)" {
+	for i, ele := range splitString {
+		if i >= 0 && i < len(splitString)-1 {
+			// since i'm dealing with i+1, i dont want to go outside of the range so i the
+			// the last the index the code should consider is the penultimate index hence
+			// i<len(splitString-1 which is equivalent to i==len(splitString)-2)
+			if strings.HasPrefix(splitString[i+1], "a") {
+				// strings.HasPrefix checks if the string starts with the substring
+				// the ele in splitString[i] is the string and "a" is the substring.
+				// then repeat for all vowels and h.
+				if ele == "a" {
+					splitString[i] = "an"
+				}
+				if ele == "A" {
+					splitString[i] = "An"
+				}
+			}
+			if strings.HasPrefix(splitString[i+1], "e") {
+				if ele == "a" {
+					splitString[i] = "an"
+				}
+				if ele == "A" {
+					splitString[i] = "An"
+				}
+			}
+			if strings.HasPrefix(splitString[i+1], "i") {
+				if ele == "a" {
+					splitString[i] = "an"
+				}
+				if ele == "A" {
+					splitString[i] = "An"
+				}
+			}
+			if strings.HasPrefix(splitString[i+1], "o") {
+				if ele == "a" {
+					splitString[i] = "an"
+				}
+				if ele == "A" {
+					splitString[i] = "An"
+				}
+			}
+			if strings.HasPrefix(splitString[i+1], "u") {
+				if ele == "a" {
+					splitString[i] = "an"
+				}
+				if ele == "A" {
+					splitString[i] = "An"
+				}
+			}
+			if strings.HasPrefix(splitString[i+1], "h") {
+				if ele == "a" {
+					splitString[i] = "an"
+				}
+				if ele == "A" {
+					splitString[i] = "An"
+				}
+			}
 		}
 	}
-	// this converts the content of the file into a string
-	// toFindCap:= "(cap)"
-	// sampleSlice:=[]rune(sampleString)
-	// subCap:=[]rune(toFindCap)
-	// counter:=0
-	// for i:=0; i<len(sampleString)-len(toFindCap); i++{
-	// 	for j:=0 ; j<len(toFindCap); j++{
-	// 		if
-
-	// 	}
-	// }
+	fmt.Println(splitString)
 }
