@@ -145,8 +145,8 @@ func main() {
 					// we then had to convert product of num which an int64 into an int
 					itos := strconv.Itoa(num2)
 					// then we converted that into into
-					split[i] = itos
-					fmt.Println(split)
+					sliceOfString[i] = itos
+					fmt.Println(sliceOfString)
 				}
 			}
 			if strings.HasPrefix(sliceOfString[i+1], "(bin)") {
@@ -154,8 +154,8 @@ func main() {
 					// we use base 2 for bin (binary) because binary only works with 2 inputs 0 and 1
 					num2 := int(num)
 					itos := strconv.Itoa(num2)
-					split[i] = itos
-					fmt.Println(split)
+					sliceOfString[i] = itos
+					fmt.Println(sliceOfString)
 				} // mal numbers to decimal numbers, without recursions.
 			}
 		}
