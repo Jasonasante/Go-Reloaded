@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"strconv"
 	"strings"
 )
 
@@ -135,38 +136,39 @@ func main() {
 			if strings.HasPrefix(sliceOfString[i+1], "(hex)") {
 				if num, err := strconv.ParseInt(sliceOfString[i], 16, 64); err == nil {
 					// this converts the string into an int64
-					// int64 means that there is a binary code with 64 places, meaning it 
+					// int64 means that there is a binary code with 64 places, meaning it
 					// accounts for a greater number of characters/numbers whatever.
 					// we use base 16 for hexdecimal because a hexdecimal works with 16 inputs
 					// 0,1,2,3,4,5,6,7,8,9,a,b,c,e,d,f.
 					//
-					num2:= int(num)
+					num2 := int(num)
 					// we then had to convert product of num which an int64 into an int
-					itos:=strconv.Itoa(num2)
+					itos := strconv.Itoa(num2)
 					// then we converted that into into
-					split[i]= itos
+					split[i] = itos
 					fmt.Println(split)
-					}
 				}
-				if strings.HasPrefix(sliceOfString[i+1], "(bin)") {
-					if num, err := strconv.ParseInt(sliceOfString[i], 2, 64); err == nil {
-						// we use base 2 for bin (binary) because binary only works with 2 inputs 0 and 1
-						num2:= int(num)
-					itos:=strconv.Itoa(num2)
-					split[i]= itos
+			}
+			if strings.HasPrefix(sliceOfString[i+1], "(bin)") {
+				if num, err := strconv.ParseInt(sliceOfString[i], 2, 64); err == nil {
+					// we use base 2 for bin (binary) because binary only works with 2 inputs 0 and 1
+					num2 := int(num)
+					itos := strconv.Itoa(num2)
+					split[i] = itos
 					fmt.Println(split)
-					}//mal numbers to decimal numbers, without recursions.
+				} // mal numbers to decimal numbers, without recursions.
+			}
 		}
+		// for i := range sliceOfString {
+		// 	if strings.HasPrefix(sliceOfString[i], "(cap") {
+		// 		sliceOfString[i] = strconv.Atoi(sliceOfString[i])
+		// 		sliceOfString[i] = strings.Trim(sliceOfString[i], sliceOfString[i])
+		// 	}
+		// }
+		// var newString string
+		// for a :=range splitString{
+		// 	newString= append(newString,splitString[a])
+		// }
+		fmt.Println(sliceOfString)
 	}
-	// for i := range sliceOfString {
-	// 	if strings.HasPrefix(sliceOfString[i], "(cap") {
-	// 		sliceOfString[i] = strconv.Atoi(sliceOfString[i])
-	// 		sliceOfString[i] = strings.Trim(sliceOfString[i], sliceOfString[i])
-	// 	}
-	// }
-	// var newString string
-	// for a :=range splitString{
-	// 	newString= append(newString,splitString[a])
-	// }
-	fmt.Println(sliceOfString)
 }
