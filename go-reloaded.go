@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-
-	//"strconv"
 	"strings"
 )
 
@@ -62,7 +60,8 @@ func Capitalize(s string) string {
 	// at r[i+1], and since there is no r[i+1] at the end the code will produce an error.
 	return string(cap)
 }
-func aToAn (s string)[]string{
+
+func aToAn(s string) []string {
 	splitString := strings.Split(s, " ")
 	// this splits the string into its own elements by the space.
 	for i, ele := range splitString {
@@ -95,11 +94,13 @@ func aToAn (s string)[]string{
 			}
 			// the above code was to change a/A to an/An.
 		}
-	}	
+	}
+	return splitString
 }
 
-// func Hex() {
-	
+// func Hex(s string) {
+// 	strconv.ParseInt(s, 16, 64)
+// 	return s
 // }
 
 func main() {
@@ -111,64 +112,44 @@ func main() {
 	}
 	sampleString := string(content)
 	// this turns the contents of the file into a string.
-	// splitString := strings.Split(sampleString, " ")
-	// // this splits the string into its own elements by the space.
-	// for i, ele := range splitString {
-	// 	// the following code is to convert a/A into an/An
-	// 	if i >= 0 && i < len(splitString)-1 {
-	// 		// since i'm dealing with i+1, i dont want to go outside of the range so i the
-	// 		// the last the index the code should consider is the penultimate index hence
-	// 		// i<len(splitString-1 which is equivalent to i==len(splitString)-2)
-	// 		if strings.HasPrefix(splitString[i+1], "a") || strings.HasPrefix(splitString[i+1], "e") || strings.HasPrefix(splitString[i+1], "i") || strings.HasPrefix(splitString[i+1], "o") || strings.HasPrefix(splitString[i+1], "u") || strings.HasPrefix(splitString[i+1], "h") {
-	// 			// strings.HasPrefix checks if the string starts with the substring
-	// 			// the ele in splitString[i] is the string and "a" is the substring.
-	// 			// then repeat for all lowercase vowels and h.
-	// 			if ele == "a" {
-	// 				splitString[i] = "an"
-	// 			}
-	// 			if ele == "A" {
-	// 				splitString[i] = "An"
-	// 			}
-	// 		}
-	// 		if strings.HasPrefix(splitString[i+1], "A") || strings.HasPrefix(splitString[i+1], "E") || strings.HasPrefix(splitString[i+1], "I") || strings.HasPrefix(splitString[i+1], "O") || strings.HasPrefix(splitString[i+1], "U") || strings.HasPrefix(splitString[i+1], "H") {
-	// 			// strings.HasPrefix checks if the string starts with the substring
-	// 			// the ele in splitString[i] is the string and "a" is the substring.
-	// 			// then repeat for all uppercase vowels and H.
-	// 			if ele == "a" {
-	// 				splitString[i] = "an"
-	// 			}
-	// 			if ele == "A" {
-	// 				splitString[i] = "An"
-	// 			}
-	// 		}
-	// 		// the above code was to change a/A to an/An.
-
-			if strings.HasPrefix(splitString[i+1], "(cap") {
-				splitString[i] = Capitalize(splitString[i])
+	sliceOfString := aToAn(sampleString)
+	// this has converted the a/A's to an/Ans and has turn the sample string into a slice of string
+	fmt.Println(sliceOfString)
+	for i := range sliceOfString {
+		if i >= 0 && i < len(sliceOfString)-1 {
+			// since i'm dealing with i+1, i dont want to go outside of the range so i the
+			// the last the index the code should consider is the penultimate index hence
+			// i<len(splitString-1 which is equivalent to i==len(splitString)-2)
+			if strings.HasPrefix(sliceOfString[i+1], "(cap") {
+				sliceOfString[i] = Capitalize(sliceOfString[i])
 			} // this deals with capitalise, without recursions.
 
-			if strings.HasPrefix(splitString[i+1], "(up") {
-				splitString[i] = ToUpper(splitString[i])
+			if strings.HasPrefix(sliceOfString[i+1], "(up") {
+				sliceOfString[i] = ToUpper(sliceOfString[i])
 			} // this deals with uppercasing the word, without recursions.
 
-			if strings.HasPrefix(splitString[i+1], "(low") {
-				splitString[i] = ToLower(splitString[i])
+			if strings.HasPrefix(sliceOfString[i+1], "(low") {
+				sliceOfString[i] = ToLower(sliceOfString[i])
 			} // this deals with lowercasing the word, without recursions.
 
-			//if strings.HasPrefix(splitString[i+1], "(hex") {
-			//	splitString[i] = Capitalize(splitString[i])
-			//} this deals with capitalise, without recursions.
+			// if strings.HasPrefix(sliceOfString[i+1], "(bin") {
+			// 	strconv.Atoi(sliceOfString[i])
+			// 	strconv.ParseInt(sliceOfString[i], 16, 64)
+			// 	bin = append(bin)
+			// 	sliceOfString[i] = bin
+			// }
+			// this deals with converting hexidecimal numbers to decimal numbers, without recursions.
 		}
 	}
-	// for i := range splitString {
-	// 	if strings.HasPrefix(splitString[i], "(cap") {
-	// 		splitString[i] = strconv.Atoi(splitString[i])
-	// 		splitString[i] = strings.Trim(splitString[i], splitString[i])
+	// for i := range sliceOfString {
+	// 	if strings.HasPrefix(sliceOfString[i], "(cap") {
+	// 		sliceOfString[i] = strconv.Atoi(sliceOfString[i])
+	// 		sliceOfString[i] = strings.Trim(sliceOfString[i], sliceOfString[i])
 	// 	}
 	// }
-	var newString string
-	for a :=range splitString{
-		newString= append(newString,splitString[a])
-	}
-	fmt.Println(splitString)
+	// var newString string
+	// for a :=range splitString{
+	// 	newString= append(newString,splitString[a])
+	// }
+	fmt.Println(sliceOfString)
 }
