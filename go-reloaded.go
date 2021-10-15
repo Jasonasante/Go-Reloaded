@@ -149,7 +149,7 @@ func main() {
 	sliceOfString := aToAn(sampleString)
 	// this has converted the a/A's to an/Ans and has turn the sample string into a slice of string
 	// fmt.Println(sliceOfString)
-	for i, str := range sliceOfString {
+	for i := range sliceOfString {
 		if i >= 0 && i < len(sliceOfString)-1 {
 			// since i'm dealing with i+1, i dont want to go outside of the range so i the
 			// the last the index the code should consider is the penultimate index hence
@@ -216,21 +216,12 @@ func main() {
 					sliceOfString[i] = Bin(sliceOfString[i])
 				}
 			} // this deals with convert binary version  to decimal numbers, without recursions.
-
-			// for i := range sliceOfString {
-			// 	if strings.HasPrefix(sliceOfString[i], "(cap") {
-			// 		num:=TrimAtoi(sliceOfString[i])
-			// 		if num==0{
-
-			// 		}
-			// 		//sliceOfString[i] = strings.Trim(sliceOfString[i], sliceOfString[i])
-			// }
-			//}
-			// var newString string
-			// for a :=range splitString{
-			// 	newString= append(newString,splitString[a])
-			// }
 		}
 	}
 	fmt.Println(sliceOfString)
+	newString := strings.Join(sliceOfString, " ")
+	// this joins a []string into a string. In this case i join each slice with a space inbetween
+	// each word
+	// fmt.Println(newString)
+	fmt.Println(string(newString))
 }
