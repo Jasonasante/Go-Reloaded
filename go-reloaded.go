@@ -222,6 +222,20 @@ func main() {
 	newString := strings.Join(sliceOfString, " ")
 	// this joins a []string into a string. In this case i join each slice with a space inbetween
 	// each word
-	// fmt.Println(newString)
-	fmt.Println(string(newString))
+	fmt.Println(newString)
+	newStringRune:=[]rune(newString)
+	var emptySpaceRune []rune
+	var newRune []rune
+	for k:=range newStringRune{
+		if k==' '{
+			if k+1!='.'|| k+1!=','||k+1!='!'|| k+1!='?'|| k+1!=':'|| k+1!=';'{
+				newRune=append(newRune,newStringRune[k])
+			}else {
+				emptySpaceRune= append(emptySpaceRune,newStringRune[k])
+			}
+		} else{
+			newRune=append(newRune,newStringRune[k])
+		}
+	}
+	fmt.Println(string(newRune))
 }
