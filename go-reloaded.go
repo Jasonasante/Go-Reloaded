@@ -116,7 +116,7 @@ func Hex(s string) string {
 	return s
 }
 
-func bin(s string) string {
+func Bin(s string) string {
 	if num, err := strconv.ParseInt(s, 2, 64); err == nil {
 		// we use base 2 for bin (binary) because binary only works with 2 inputs 0 and 1
 		num2 := int(num)
@@ -124,6 +124,17 @@ func bin(s string) string {
 		s = itos
 	}
 	return s
+}
+
+func TrimAtoi(s string) int {
+	myRunes := []rune(s)
+	num := 0
+	for _, b := range myRunes {
+		if b >= 48 && b <= 57 {
+			num = num*10 + int(b-'0')
+		}
+	}
+	return num
 }
 
 func main() {
@@ -137,43 +148,89 @@ func main() {
 	// this turns the contents of the file into a string.
 	sliceOfString := aToAn(sampleString)
 	// this has converted the a/A's to an/Ans and has turn the sample string into a slice of string
-	fmt.Println(sliceOfString)
-	for i := range sliceOfString {
+	// fmt.Println(sliceOfString)
+	for i, str := range sliceOfString {
 		if i >= 0 && i < len(sliceOfString)-1 {
 			// since i'm dealing with i+1, i dont want to go outside of the range so i the
 			// the last the index the code should consider is the penultimate index hence
 			// i<len(splitString-1 which is equivalent to i==len(splitString)-2)
 			if strings.HasPrefix(sliceOfString[i+1], "(cap") {
-				sliceOfString[i] = Capitalize(sliceOfString[i])
-			} // this deals with capitalise, without recursions.
+				num := TrimAtoi(sliceOfString[i+2])
+				if num > 0 {
+					for j := i; j > i-num; j-- {
+						// we made j:=i
+						sliceOfString[j] = Capitalize(sliceOfString[j])
+						// this will substitute the substring at position j with the capitalised
+						// version and will loop it until the last word given.
+						fmt.Println(j)
+					}
+				} else {
+					sliceOfString[i] = Capitalize(sliceOfString[i])
+				}
+			} // this is for capitalising
 
 			if strings.HasPrefix(sliceOfString[i+1], "(up") {
-				sliceOfString[i] = ToUpper(sliceOfString[i])
-			} // this deals with uppercasing the word, without recursions.
+				num := TrimAtoi(sliceOfString[i+2])
+				if num > 0 {
+					for j := i; j > i-num; j-- {
+						sliceOfString[j] = ToUpper(sliceOfString[j])
+						fmt.Println(j)
+					}
+				} else {
+					sliceOfString[i] = ToUpper(sliceOfString[i])
+				}
+			} // this is for uppercasing
 
 			if strings.HasPrefix(sliceOfString[i+1], "(low") {
-				sliceOfString[i] = ToLower(sliceOfString[i])
-			} // this deals with lowercasing the word, without recursions.
+				num := TrimAtoi(sliceOfString[i+2])
+				if num > 0 {
+					for j := i; j > i-num; j-- {
+						sliceOfString[j] = ToLower(sliceOfString[j])
+						fmt.Println(j)
+					}
+				} else {
+					sliceOfString[i] = ToLower(sliceOfString[i])
+				}
+			} // this is for lowcasing
 
-			if strings.HasPrefix(sliceOfString[i+1], "(hex)") {
-				sliceOfString[i] = Hex(sliceOfString[i])
-			} // this deals with hexadecimal version to the decimal version of the word, without recursions.
+			if strings.HasPrefix(sliceOfString[i+1], "(hex") {
+				num := TrimAtoi(sliceOfString[i+2])
+				if num > 0 {
+					for j := i; j > i-num; j-- {
+						sliceOfString[j] = Hex(sliceOfString[j])
+						fmt.Println(j)
+					}
+				} else {
+					sliceOfString[i] = Hex(sliceOfString[i])
+				}
+			} // this is for hexadecimal--> decimal
 
-			if strings.HasPrefix(sliceOfString[i+1], "(bin)") {
-				sliceOfString[i] = bin(sliceOfString[i])
+			if strings.HasPrefix(sliceOfString[i+1], "(bin") {
+				num := TrimAtoi(sliceOfString[i+2])
+				if num > 0 {
+					for j := i; j > i-num; j-- {
+						sliceOfString[j] = Bin(sliceOfString[j])
+						fmt.Println(j)
+					}
+				} else {
+					sliceOfString[i] = Bin(sliceOfString[i])
+				}
 			} // this deals with convert binary version  to decimal numbers, without recursions.
 
 			// for i := range sliceOfString {
 			// 	if strings.HasPrefix(sliceOfString[i], "(cap") {
-			// 		sliceOfString[i] = strconv.Atoi(sliceOfString[i])
-			// 		sliceOfString[i] = strings.Trim(sliceOfString[i], sliceOfString[i])
-			// 	}
+			// 		num:=TrimAtoi(sliceOfString[i])
+			// 		if num==0{
+
+			// 		}
+			// 		//sliceOfString[i] = strings.Trim(sliceOfString[i], sliceOfString[i])
 			// }
+			//}
 			// var newString string
 			// for a :=range splitString{
 			// 	newString= append(newString,splitString[a])
 			// }
-			fmt.Println(sliceOfString)
 		}
 	}
+	fmt.Println(sliceOfString)
 }
