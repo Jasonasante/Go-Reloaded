@@ -137,6 +137,33 @@ func TrimAtoi(s string) int {
 	return num
 }
 
+func RemoveIndex(b []rune, index int) []rune {
+	return append(b[:index], b[index+1:]...)
+}
+
+func Spaces (s string) string{
+	runes := []rune(s)
+	var newRunes []rune
+	for i := range runes {
+		if i >= 0 && i < len(runes)-1 {
+			if (runes[i] == '!') || (runes[i] == '.') || (runes[i] == ',') || (runes[i] == ';') || (runes[i] == ':') || (runes[i] == '?') && ((runes[i+1] >= 48 || runes[i+1] <= 57) && (runes[i+1] >= 65 || runes[i+1] <= 90) && (runes[i+1] >= 97 || runes[i+1] <= 122)) {
+				newRunes = append(newRunes, runes[i], ' ')
+			} else {
+				newRunes = append(newRunes, runes[i])
+			}
+		}
+	}
+	newRunes = append(newRunes, runes[len(runes)-1])
+	for i := range newRunes {
+		if i >= 0 && i < len(newRunes)-1 {
+			if newRunes[i] == ' ' && newRunes[i+1] == '!' || newRunes[i] == ' ' && newRunes[i+1] == '.' || newRunes[i] == ' ' && newRunes[i+1] == ',' || newRunes[i] == ' ' && newRunes[i+1] == ':' || newRunes[i] == ' ' && newRunes[i+1] == ';' || newRunes[i] == ' ' && newRunes[i+1] == '?' || newRunes[i] == ' ' && newRunes[i+1] == ' '{
+				newRunes = RemoveIndex(newRunes, i)
+			}
+		}
+	}
+	return string(newRunes)
+}
+
 func main() {
 	fileName := "sample.txt"
 	content, err := ioutil.ReadFile(fileName)
@@ -222,20 +249,7 @@ func main() {
 	newString := strings.Join(sliceOfString, " ")
 	// this joins a []string into a string. In this case i join each slice with a space inbetween
 	// each word
-	fmt.Println(newString)
-	newStringRune:=[]rune(newString)
-	var emptySpaceRune []rune
-	var newRune []rune
-	for k:=range newStringRune{
-		if k==' '{
-			if k+1!='.'|| k+1!=','||k+1!='!'|| k+1!='?'|| k+1!=':'|| k+1!=';'{
-				newRune=append(newRune,newStringRune[k])
-			}else {
-				emptySpaceRune= append(emptySpaceRune,newStringRune[k])
-			}
-		} else{
-			newRune=append(newRune,newStringRune[k])
-		}
-	}
-	fmt.Println(string(newRune))
+	newString2:=Spaces(newString)
+	fmt.Println(string(newString2))
+	
 }
