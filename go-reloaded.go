@@ -139,9 +139,12 @@ func TrimAtoi(s string) int {
 
 func RemoveIndex(b []rune, index int) []rune {
 	return append(b[:index], b[index+1:]...)
+	// step 1 = b[:index] this grabs evewrything before the index (which in this case is are the spaces that fit the condition in func Spaces)
+	// step 2 = b[index+1:] this grabs everything from index+1 onwards.
+	// Therefore, this appends step 2 at the position of step 1 and therefore removes the space.
 }
 
-func Spaces (s string) string{
+func Spaces(s string) string {
 	runes := []rune(s)
 	var newRunes []rune
 	for i := range runes {
@@ -156,7 +159,7 @@ func Spaces (s string) string{
 	newRunes = append(newRunes, runes[len(runes)-1])
 	for i := range newRunes {
 		if i >= 0 && i < len(newRunes)-1 {
-			if newRunes[i] == ' ' && newRunes[i+1] == '!' || newRunes[i] == ' ' && newRunes[i+1] == '.' || newRunes[i] == ' ' && newRunes[i+1] == ',' || newRunes[i] == ' ' && newRunes[i+1] == ':' || newRunes[i] == ' ' && newRunes[i+1] == ';' || newRunes[i] == ' ' && newRunes[i+1] == '?' || newRunes[i] == ' ' && newRunes[i+1] == ' '{
+			if newRunes[i] == ' ' && newRunes[i+1] == '!' || newRunes[i] == ' ' && newRunes[i+1] == '.' || newRunes[i] == ' ' && newRunes[i+1] == ',' || newRunes[i] == ' ' && newRunes[i+1] == ':' || newRunes[i] == ' ' && newRunes[i+1] == ';' || newRunes[i] == ' ' && newRunes[i+1] == '?'|| newRunes[i] == ' ' && newRunes[i-1] == 8216 || newRunes[i] == ' ' && newRunes[i+1] == 8217 {
 				newRunes = RemoveIndex(newRunes, i)
 			}
 		}
@@ -249,7 +252,6 @@ func main() {
 	newString := strings.Join(sliceOfString, " ")
 	// this joins a []string into a string. In this case i join each slice with a space inbetween
 	// each word
-	newString2:=Spaces(newString)
+	newString2 := Spaces(newString)
 	fmt.Println(string(newString2))
-	
 }
