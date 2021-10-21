@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"log"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -149,8 +150,16 @@ func Spaces(s string) string {
 	var newRunes []rune
 	for i := range runes {
 		if i >= 0 && i < len(runes)-1 {
-			if (runes[i] == '!') || (runes[i] == '.') || (runes[i] == ',') || (runes[i] == ';') || (runes[i] == ':') || (runes[i] == '?') && ((runes[i+1] >= 48 || runes[i+1] <= 57) && (runes[i+1] >= 65 || runes[i+1] <= 90) && (runes[i+1] >= 97 || runes[i+1] <= 122)) {
-				newRunes = append(newRunes, runes[i], ' ')
+			if runes[i] == '.' || runes[i] == ',' || runes[i] == '!' || runes[i] == '?' || runes[i] == ':' || runes[i] == ';' || runes[i] == 8217 {
+				if runes[i+1] >= 48 && runes[i+1] <= 57 {
+					newRunes = append(newRunes, runes[i], ' ')
+				} else if runes[i+1] >= 65 && runes[i+1] <= 90 {
+					newRunes = append(newRunes, runes[i], ' ')
+				} else if runes[i+1] >= 97 && runes[i+1] <= 122 {
+					newRunes = append(newRunes, runes[i], ' ')
+				} else {
+					newRunes = append(newRunes, runes[i])
+				}
 			} else {
 				newRunes = append(newRunes, runes[i])
 			}
@@ -159,7 +168,7 @@ func Spaces(s string) string {
 	newRunes = append(newRunes, runes[len(runes)-1])
 	for i := range newRunes {
 		if i >= 0 && i < len(newRunes)-1 {
-			if newRunes[i] == ' ' && newRunes[i+1] == '!' || newRunes[i] == ' ' && newRunes[i+1] == '.' || newRunes[i] == ' ' && newRunes[i+1] == ',' || newRunes[i] == ' ' && newRunes[i+1] == ':' || newRunes[i] == ' ' && newRunes[i+1] == ';' || newRunes[i] == ' ' && newRunes[i+1] == '?'|| newRunes[i] == ' ' && newRunes[i-1] == 8216 || newRunes[i] == ' ' && newRunes[i+1] == 8217 {
+			if newRunes[i] == ' ' && newRunes[i+1] == '!' || newRunes[i] == ' ' && newRunes[i+1] == '.' || newRunes[i] == ' ' && newRunes[i+1] == ',' || newRunes[i] == ' ' && newRunes[i+1] == ':' || newRunes[i] == ' ' && newRunes[i+1] == ';' || newRunes[i] == ' ' && newRunes[i+1] == '?' || newRunes[i] == ' ' && newRunes[i-1] == 8216 || newRunes[i] == ' ' && newRunes[i+1] == 8217 {
 				newRunes = RemoveIndex(newRunes, i)
 			}
 		}
@@ -167,9 +176,9 @@ func Spaces(s string) string {
 	return string(newRunes)
 }
 
-func main() {
-	fileName := "sample.txt"
-	content, err := ioutil.ReadFile(fileName)
+func goreloaded() {
+	input := os.Args[1]
+	content, err := os.ReadFile(input)
 	// this reads the content of the file
 	if err != nil {
 		fmt.Printf("the mistake is : %v\n", err.Error())
@@ -192,10 +201,11 @@ func main() {
 						sliceOfString[j] = Capitalize(sliceOfString[j])
 						// this will substitute the substring at position j with the capitalised
 						// version and will loop it until the last word given.
-						fmt.Println(j)
 					}
+					sliceOfString = append(sliceOfString[:i+1], sliceOfString[i+3:]...)
 				} else {
 					sliceOfString[i] = Capitalize(sliceOfString[i])
+					sliceOfString = append(sliceOfString[:i+1], sliceOfString[i+2:]...)
 				}
 			} // this is for capitalising
 
@@ -204,10 +214,11 @@ func main() {
 				if num > 0 {
 					for j := i; j > i-num; j-- {
 						sliceOfString[j] = ToUpper(sliceOfString[j])
-						fmt.Println(j)
 					}
+					sliceOfString = append(sliceOfString[:i+1], sliceOfString[i+3:]...)
 				} else {
 					sliceOfString[i] = ToUpper(sliceOfString[i])
+					sliceOfString = append(sliceOfString[:i+1], sliceOfString[i+2:]...)
 				}
 			} // this is for uppercasing
 
@@ -216,10 +227,12 @@ func main() {
 				if num > 0 {
 					for j := i; j > i-num; j-- {
 						sliceOfString[j] = ToLower(sliceOfString[j])
-						fmt.Println(j)
 					}
+					sliceOfString = append(sliceOfString[:i+1], sliceOfString[i+3:]...)
 				} else {
 					sliceOfString[i] = ToLower(sliceOfString[i])
+					sliceOfString = append(sliceOfString[:i+1], sliceOfString[i+2:]...)
+
 				}
 			} // this is for lowcasing
 
@@ -228,10 +241,11 @@ func main() {
 				if num > 0 {
 					for j := i; j > i-num; j-- {
 						sliceOfString[j] = Hex(sliceOfString[j])
-						fmt.Println(j)
 					}
+					sliceOfString = append(sliceOfString[:i+1], sliceOfString[i+3:]...)
 				} else {
 					sliceOfString[i] = Hex(sliceOfString[i])
+					sliceOfString = append(sliceOfString[:i+1], sliceOfString[i+2:]...)
 				}
 			} // this is for hexadecimal--> decimal
 
@@ -240,18 +254,23 @@ func main() {
 				if num > 0 {
 					for j := i; j > i-num; j-- {
 						sliceOfString[j] = Bin(sliceOfString[j])
-						fmt.Println(j)
 					}
+					sliceOfString = append(sliceOfString[:i+1], sliceOfString[i+3:]...)
 				} else {
 					sliceOfString[i] = Bin(sliceOfString[i])
+					sliceOfString = append(sliceOfString[:i+1], sliceOfString[i+2:]...)
 				}
 			} // this deals with convert binary version  to decimal numbers, without recursions.
 		}
 	}
-	fmt.Println(sliceOfString)
+	// fmt.Println(sliceOfString)
 	newString := strings.Join(sliceOfString, " ")
 	// this joins a []string into a string. In this case i join each slice with a space inbetween
 	// each word
 	newString2 := Spaces(newString)
-	fmt.Println(string(newString2))
+	newString2Bytes := []byte(newString2)
+	err2 := os.WriteFile("result.txt", newString2Bytes, 0644)
+	if err2 != nil {
+		log.Fatal(err2)
+	}
 }
