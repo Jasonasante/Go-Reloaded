@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"strconv"
@@ -176,12 +177,12 @@ func Spaces(s string) string {
 	return string(newRunes)
 }
 
-func goreloaded() {
-	input := os.Args[1]
-	content, err := os.ReadFile(input)
+func GoReloaded() {
+	inputFile := os.Args[1]
+	content, err := ioutil.ReadFile(inputFile)
 	// this reads the content of the file
 	if err != nil {
-		fmt.Printf("the mistake is : %v\n", err.Error())
+		fmt.Printf(err.Error())
 	}
 	sampleString := string(content)
 	// this turns the contents of the file into a string.
@@ -269,7 +270,8 @@ func goreloaded() {
 	// each word
 	newString2 := Spaces(newString)
 	newString2Bytes := []byte(newString2)
-	err2 := os.WriteFile("result.txt", newString2Bytes, 0644)
+	outputFile := os.Args[2]
+	err2 := os.WriteFile(outputFile, newString2Bytes, 0644)
 	if err2 != nil {
 		log.Fatal(err2)
 	}
