@@ -177,6 +177,10 @@ func Spaces(s string) string {
 	return string(newRunes)
 }
 
+func main() {
+	GoReloaded()
+}
+
 func GoReloaded() {
 	inputFile := os.Args[1]
 	content, err := ioutil.ReadFile(inputFile)
